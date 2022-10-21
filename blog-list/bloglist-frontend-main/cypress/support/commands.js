@@ -24,25 +24,26 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-
-Cypress.Commands.add('login', (username, password) => {
-  cy.request('POST', 'http://localhost:3003/api/login', { username: username, password: password } )
-    .then(response => {
-      localStorage.setItem('loggedUserBlogList', JSON.stringify(response.body))
-      cy.visit('http://localhost:3000')
-    })
-})
-Cypress.Commands.add('addBlog', (blog) => {
-  const token = JSON.parse(localStorage.getItem('loggedUserBlogList')).token
+Cypress.Commands.add("login", (username, password) => {
+  cy.request("POST", "http://localhost:3003/api/login", {
+    username: username,
+    password: password,
+  }).then((response) => {
+    localStorage.setItem("loggedUserBlogList", JSON.stringify(response.body));
+    cy.visit("http://localhost:3000");
+  });
+});
+Cypress.Commands.add("addBlog", (blog) => {
+  const token = JSON.parse(localStorage.getItem("loggedUserBlogList")).token;
   //In fronend, the token is added by setting axios default header.
   //In cyexpress test, this is done by set the header manually
   const options = {
-    method: 'POST',
-    url: 'http://localhost:3003/api/blogs',
+    method: "POST",
+    url: "http://localhost:3003/api/blogs",
     headers: {
-      authorization: `bearer ${token}`
+      authorization: `bearer ${token}`,
     },
-    body: blog
-  }
-  cy.request(options)
-})
+    body: blog,
+  };
+  cy.request(options);
+});

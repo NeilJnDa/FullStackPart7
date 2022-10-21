@@ -1,5 +1,5 @@
-import { useState, useImperativeHandle, forwardRef } from 'react'
-import PropTypes from 'prop-types'
+import { useState, useImperativeHandle, forwardRef } from "react";
+import PropTypes from "prop-types";
 // Usage:
 //      const ref = useRef()
 //      <Toggle buttonLabel = 'XX' ref = {ref}> <YYY> </Toggle>
@@ -9,22 +9,20 @@ import PropTypes from 'prop-types'
 // The content YYY can be accessed by {props.children}
 // toggleVisibility() function exposed to parent.
 
-
-
-const Toggle = forwardRef((props,ref) => {
-  const [visible, setVisible] = useState(false)
-  const hideWhenVisible = { display: visible ? 'none': '' }
-  const showWhenVisible = { display: visible ? '': 'none' }
+const Toggle = forwardRef((props, ref) => {
+  const [visible, setVisible] = useState(false);
+  const hideWhenVisible = { display: visible ? "none" : "" };
+  const showWhenVisible = { display: visible ? "" : "none" };
 
   const toggleVisibility = () => {
-    setVisible(!visible)
-  }
+    setVisible(!visible);
+  };
   //Customize value exposes to parent
   useImperativeHandle(ref, () => {
-    return { toggleVisibility }
-  })
+    return { toggleVisibility };
+  });
 
-  return(
+  return (
     <div>
       <div style={hideWhenVisible}>
         <button onClick={toggleVisibility}>{props.buttonLabel}</button>
@@ -34,10 +32,10 @@ const Toggle = forwardRef((props,ref) => {
         <button onClick={toggleVisibility}>Cancel</button>
       </div>
     </div>
-  )
-})
-Toggle.displayName = 'Toggle'
+  );
+});
+Toggle.displayName = "Toggle";
 Toggle.propTypes = {
-  buttonLabel : PropTypes.string.isRequired
-}
-export default Toggle
+  buttonLabel: PropTypes.string.isRequired,
+};
+export default Toggle;
