@@ -8,15 +8,18 @@ import Toggle from './components/Toggle'
 import './index.css'
 import NewBlogForm from './components/NewBlogForm'
 
+//Redux
+import { useDispatch } from 'react-redux'
+import { setNotification } from './reducers/notificationReducer'
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
-  const [errorFlag, setErrorFlag] = useState(false)
 
   const createToggleRef = useRef()
+  const dispatch = useDispatch()
 
   // Use local token to log in
   useEffect(() => {
@@ -32,12 +35,13 @@ const App = () => {
   }, [])
   //Pop up messages, a wrapper for notification
   function popMessage(message, duration, isError=false){
-    setMessage(message)
-    setErrorFlag(isError)
-    setTimeout(() => {
-      setMessage('')
-      setErrorFlag(false)
-    }, duration * 1000)
+    dispatch(setNotification(message, duration, isError))
+    // setMessage(message)
+    // setErrorFlag(isError)
+    // setTimeout(() => {
+    //   setMessage('')
+    //   setErrorFlag(false)
+    // }, duration * 1000)
   }
   //Login
   const handleLogin = async (event) => {
@@ -94,10 +98,7 @@ const App = () => {
     return(
       <div>
         <h2>Log in to application</h2>
-        <Notification
-          message={message}
-          errorFlag={errorFlag}
-        />
+        <Notification/>
         <form onSubmit={handleLogin}>
           <div>
             Username
@@ -129,10 +130,7 @@ const App = () => {
     return (
       <div>
         <h2>Blogs</h2>
-        <Notification
-          message={message}
-          errorFlag={errorFlag}
-        />
+        <Notification/>
         <p>{user.name} logged in <button onClick={handleLogout}>Logout</button></p>
         <Toggle buttonLabel = 'Create New' ref = {createToggleRef}>
           <NewBlogForm

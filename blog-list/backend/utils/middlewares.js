@@ -34,7 +34,7 @@ const errorHandler = (error, request, response, next) => {
     next(error);
 };
 const userExtractor = async (request, response, next) => {
-    if (request.hearder.authorization === null) {
+    if (request.header.authorization === null) {
         console.log('No Token');
         next();
         return null;
