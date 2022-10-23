@@ -4,6 +4,8 @@ import Login from "./components/Login";
 import BlogList from "./components/BlogList";
 import UserList from "./components/UserList";
 import Navigation from "./components/Navigation";
+import UserSingle from "./components/UserSingle"
+
 
 import blogService from "./services/blogs";
 import userService from "./services/users";
@@ -29,7 +31,7 @@ const App = () => {
       blogService.setToken(newUser.token);
       userService.setToken(newUser.token);
       console.log("Set Token To", newUser.token)
-      
+
       dispatch(setUser(newUser));
       dispatch(fetchBlogs());
     }
@@ -50,6 +52,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<BlogList/>} />
             <Route path="/users" element={<UserList/>} />
+            <Route path="/users/:id" element={<UserSingle/>} />
+
           </Routes>
         </Router>
       </div>

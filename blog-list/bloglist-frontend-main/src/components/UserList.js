@@ -1,5 +1,6 @@
- import { useEffect} from "react";
+import { useEffect} from "react";
 import { useDispatch, useSelector  } from "react-redux";
+import { Link } from "react-router-dom"; 
 
 // import blogService from "../services/blogs";
 
@@ -7,21 +8,15 @@ import { useDispatch, useSelector  } from "react-redux";
 // import { fetchBlogs, createBlog, setBlogs } from "../reducers/blogReducer";
 // import { setUser } from "../reducers/userReducer";
 import { fetchAllUsers } from "../reducers/allUserReducer";
-
-// import Notification from "./Notification";
-// import Blog from "./Blog";
-// import Toggle from "./Toggle";
-// import NewBlogForm from "./NewBlogForm";
-
 const UserList = () => {
   const dispatch = useDispatch()
   useEffect(()=>{
+    //Waiting for updating of token.
     setTimeout(() => {
       dispatch(fetchAllUsers())
     }, 1);
   },[dispatch])
   const allUsers = useSelector(state => state.allUser)
-  console.log(allUsers)
   if(allUsers.length === 0 )
     return(
       <div>
@@ -47,9 +42,9 @@ const UserList = () => {
 const userRow = (user)=>{
   return(
     <tr key={user.name}>
-      <td>{user.name}</td>
+      <td><Link to={`/users/${user.id}`}>{user.name} </Link> </td>
       <td>{user.blogs.length}</td>
     </tr>
-  )
+  ) 
 }
 export default UserList;
