@@ -18,6 +18,7 @@ import {
   BrowserRouter as Router,
   Routes, Route
 } from "react-router-dom"
+import { fetchAllUsers } from "./reducers/allUserReducer";
 
 const App = () => {
   const user = useSelector(state=>state.user);
@@ -34,6 +35,7 @@ const App = () => {
 
       dispatch(setUser(newUser));
       dispatch(fetchBlogs());
+      dispatch(fetchAllUsers());
     }
   }, []);
 
@@ -52,7 +54,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<BlogList/>} />
             <Route path="/users" element={<UserList/>} />
-            <Route path="/users/:id" element={<UserSingle/>} />
+            <Route path="/users/:id" element={<UserSingle allUsers={useSelector(state=>state.allUser)}/>} />
 
           </Routes>
         </Router>

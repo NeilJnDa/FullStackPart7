@@ -22,13 +22,20 @@ const UserSingle = ({allUsers}) => {
   const id = useParams().id
   console.log(id)
   console.log(allUsers)
-
-    return(
-      <div>
-        <h2>Users</h2>
-        <p>No Users</p>
-      </div>
-    )
+  const user = allUsers.find(x => x.id === id)
+  console.log(user)
+  if(!user){
+    return null
+  }
+  return(
+    <div>
+      <h2>{user.name}</h2>
+      <h2>Added Blogs</h2>
+      <ul>
+        {user.blogs.map(b => <li key={b.id}>{b.title}</li>)}
+      </ul>
+    </div>
+  )
 };
 
 export default UserSingle;
