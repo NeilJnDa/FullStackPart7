@@ -1,29 +1,10 @@
-import {
-  // ...
-  useParams
-} from "react-router-dom"
-// import { useEffect} from "react";
-// import { useDispatch, useSelector  } from "react-redux";
-// import { Link, Route } from "react-router-dom"
-
-// import blogService from "../services/blogs";
-
-// import { setNotification } from "../reducers/notificationReducer";
-// import { fetchBlogs, createBlog, setBlogs } from "../reducers/blogReducer";
-// import { setUser } from "../reducers/userReducer";
-// import { fetchAllUsers } from "../reducers/allUserReducer";
-
-// import Notification from "./Notification";
-// import Blog from "./Blog";
-// import Toggle from "./Toggle";
-// import NewBlogForm from "./NewBlogForm";
-
-const UserSingle = ({allUsers}) => {
+import { useParams } from "react-router-dom"
+import { useSelector } from "react-redux";
+const UserSingle = () => {
+  const users = useSelector(state => state.allUser)
   const id = useParams().id
-  console.log(id)
-  console.log(allUsers)
-  const user = allUsers.find(x => x.id === id)
-  console.log(user)
+  const user = users.find(x => x.id === id)
+
   if(!user){
     return null
   }

@@ -5,6 +5,7 @@ import BlogList from "./components/BlogList";
 import UserList from "./components/UserList";
 import Navigation from "./components/Navigation";
 import UserSingle from "./components/UserSingle"
+import BlogSingle from "./components/BlogSingle"
 
 
 import blogService from "./services/blogs";
@@ -54,7 +55,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<BlogList/>} />
             <Route path="/users" element={<UserList/>} />
-            <Route path="/users/:id" element={<UserSingle allUsers={useSelector(state=>state.allUser)}/>} />
+            <Route path="/users/:id" element={<UserSingle/>} />
+            <Route path="/blogs/:id" element={<BlogSingle/>} />
 
           </Routes>
         </Router>

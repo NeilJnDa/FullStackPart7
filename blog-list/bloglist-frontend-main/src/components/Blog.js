@@ -2,6 +2,7 @@ import blogService from "../services/blogs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteBlog, fetchBlogs } from "../reducers/blogReducer";
+import { Link } from "react-router-dom";
 
 const Blog = ({ blog, user }) => {
   const dispatch = useDispatch()
@@ -17,19 +18,20 @@ const Blog = ({ blog, user }) => {
   if (!visible) {
     return (
       <div style={blogStyle} id={blog.title} className="blog">
-        {blog.title} {blog.author}{" "}
+        <Link to={`/blogs/${blog.id}`}  >{blog.title} by {blog.author}</Link>
         <button onClick={() => setVisible(true)}>View</button>
       </div>
     );
   } else
     return (
       <div style={blogStyle} id={blog.title} className="blog">
-        <div>
-          {blog.title} <button onClick={() => setVisible(false)}>Hide</button>
+        <div> 
+          <Link to={`/blogs/${blog.id}`}  >{blog.title} by {blog.author}</Link>
+          <button onClick={() => setVisible(false)}>Hide</button>
         </div>
         <div>{blog.url}</div>
         <div>
-          Likes <span id="LikesNumber">{blog.likes}</span>{" "}
+          Likes <span id="LikesNumber">{blog.likes}</span>
           <button
             onClick={() => {
               blogService.addLikes(blog)
