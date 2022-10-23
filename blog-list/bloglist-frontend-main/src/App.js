@@ -1,22 +1,23 @@
-import { useState } from "react";
+import { useSelector  } from "react-redux";
+
 import Login from "./components/Login";
 import BlogList from "./components/BlogList";
 import "./index.css";
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const user = useSelector(state=>state.user);
 
   //JSX returned by react
   if (user === null)
     return (
       <div>
-        <Login user={user} setUser={setUser} />
+        <Login/>
       </div>
     );
   else {
     return (
       <div>
-        <BlogList user={user} setUser={setUser} />
+        <BlogList/>
       </div>
     );
   }

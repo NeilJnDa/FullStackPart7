@@ -1,7 +1,7 @@
 import blogService from "../services/blogs";
 import { useState } from "react";
 
-const Blog = ({ blog, addLikeHandler, refreshBlogList, user }) => {
+const Blog = ({ blog, refreshBlogList, user }) => {
   const [visible, setVisible] = useState(false);
   const blogStyle = {
     paddingTop: 10,
@@ -28,7 +28,7 @@ const Blog = ({ blog, addLikeHandler, refreshBlogList, user }) => {
           Likes <span id="LikesNumber">{blog.likes}</span>{" "}
           <button
             onClick={() => {
-              addLikeHandler(blog);
+              blogService.addLikes(blog)
               refreshBlogList();
             }}
           >

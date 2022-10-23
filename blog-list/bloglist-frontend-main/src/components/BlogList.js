@@ -5,16 +5,19 @@ import blogService from "../services/blogs";
 
 import { setNotification } from "../reducers/notificationReducer";
 import { fetchBlogs, createBlog, setBlogs } from "../reducers/blogReducer";
+import { setUser } from "../reducers/userReducer";
+
 
 import Notification from "./Notification";
 import Blog from "./Blog";
 import Toggle from "./Toggle";
 import NewBlogForm from "./NewBlogForm";
 
-const BlogList = ({user, setUser}) => {
+const BlogList = () => {
   const createToggleRef = useRef();
   const blogs = useSelector(state => state.blog);
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user)
   //Logout
   const handleLogout = (event) => {
     event.preventDefault();
@@ -22,7 +25,7 @@ const BlogList = ({user, setUser}) => {
 
     blogService.setToken(null);
     window.localStorage.removeItem("loggedUserBlogList");
-    setUser(null);
+    dispatch(setUser(null));
     dispatch(setBlogs([]));
   };
   //New blog
@@ -43,11 +46,8 @@ const BlogList = ({user, setUser}) => {
       console.error(exception);
     }
   };
-  //Get request: Blogs
-  async function refreshBlogList() {
+  function refreshBlogList() {
     dispatch(fetchBlogs());
-    // const blogs = await blogService.getAll();
-    // dispatch(setBlogs(blogs));
   }
   //Blog page
   return (
@@ -68,7 +68,6 @@ const BlogList = ({user, setUser}) => {
             <Blog
               key={blog.id}
               blog={blog}
-              addLikeHandler={blogService.addLikes}
               refreshBlogList={refreshBlogList}
               user={user}
             />

@@ -1,25 +1,26 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 
 import blogService from "../services/blogs";
 import loginService from "../services/login";
 
 import { setNotification } from "../reducers/notificationReducer";
 import { fetchBlogs } from "../reducers/blogReducer";
+import { setUser } from "../reducers/userReducer";
+
 
 import Notification from "./Notification";
 
-const Login = ({setUser}) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-
   // Use local token to log in
   useEffect(() => {
     const loggedUserJson = window.localStorage.getItem("loggedUserBlogList");
     if (loggedUserJson) {
       const newUser = JSON.parse(loggedUserJson);
-      setUser(newUser);
+      dispatch(setUser(newUser));
       blogService.setToken(newUser.token);
       dispatch(fetchBlogs());
     }
@@ -33,7 +34,7 @@ const Login = ({setUser}) => {
       dispatch(setNotification(`Logged in with ${username}`, 3));
       blogService.setToken(user.token);
       window.localStorage.setItem("loggedUserBlogList", JSON.stringify(user));
-      setUser(user);
+      dispatch(setUser(user));
       setUsername("");
       setPassword("");
       dispatch(fetchBlogs());
