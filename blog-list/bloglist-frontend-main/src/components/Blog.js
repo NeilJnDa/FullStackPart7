@@ -1,7 +1,11 @@
 import blogService from "../services/blogs";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteBlog, fetchBlogs } from "../reducers/blogReducer";
 
-const Blog = ({ blog, refreshBlogList, user }) => {
+const Blog = ({ blog, user }) => {
+  const dispatch = useDispatch()
+
   const [visible, setVisible] = useState(false);
   const blogStyle = {
     paddingTop: 10,
@@ -29,7 +33,7 @@ const Blog = ({ blog, refreshBlogList, user }) => {
           <button
             onClick={() => {
               blogService.addLikes(blog)
-              refreshBlogList();
+              dispatch(fetchBlogs())
             }}
           >
             Like
@@ -38,19 +42,19 @@ const Blog = ({ blog, refreshBlogList, user }) => {
         <div>{blog.author}</div>
         <RemoveButton
           blog={blog}
-          refreshBlogList={refreshBlogList}
           user={user}
         />
       </div>
     );
 };
-const RemoveButton = ({ blog, refreshBlogList, user }) => {
+const RemoveButton = ({ blog, user }) => {
+  const dispatch = useDispatch()
   if (user && blog.user.username && user.username === blog.user.username)
     return (
       <button
         onClick={() => {
           if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-            blogService.removeOne(blog).then(() => refreshBlogList());
+            dispatch(deleteBlog(blog))
           }
         }}
       >

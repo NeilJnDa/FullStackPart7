@@ -1,12 +1,12 @@
-// import { useRef} from "react";
-// import { useDispatch, useSelector  } from "react-redux";
+ import { useEffect} from "react";
+import { useDispatch, useSelector  } from "react-redux";
 
 // import blogService from "../services/blogs";
 
 // import { setNotification } from "../reducers/notificationReducer";
 // import { fetchBlogs, createBlog, setBlogs } from "../reducers/blogReducer";
 // import { setUser } from "../reducers/userReducer";
-
+import { fetchAllUsers } from "../reducers/allUserReducer";
 
 // import Notification from "./Notification";
 // import Blog from "./Blog";
@@ -14,9 +14,42 @@
 // import NewBlogForm from "./NewBlogForm";
 
 const UserList = () => {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    setTimeout(() => {
+      dispatch(fetchAllUsers())
+    }, 1);
+  },[dispatch])
+  const allUsers = useSelector(state => state.allUser)
+  console.log(allUsers)
+  if(allUsers.length === 0 )
+    return(
+      <div>
+        <h2>Users</h2>
+        <p>No Users</p>
+      </div>
+    )
   return(
-    <p>Users</p>
+    <div>   
+      <h2>Users</h2>
+      <table>
+        <tbody>
+          <tr>
+            <th></th>
+            <th>Blogs created</th>
+          </tr>
+          {allUsers.map(user => userRow(user))}
+        </tbody>
+      </table>
+    </div>
   )
 };
-
+const userRow = (user)=>{
+  return(
+    <tr key={user.name}>
+      <td>{user.name}</td>
+      <td>{user.blogs.length}</td>
+    </tr>
+  )
+}
 export default UserList;

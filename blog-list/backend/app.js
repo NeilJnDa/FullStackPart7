@@ -5,7 +5,9 @@ const config = require('./utils/config');
 
 const app = express();
 const blogRouter = require('./controllers/blogRouter');
+const newUserRouter = require('./controllers/newUserRouter');
 const userRouter = require('./controllers/userRouter');
+
 const loginRouter = require('./controllers/loginRouter');
 const testRouter = require('./controllers/testRouter');
 
@@ -35,8 +37,12 @@ app.use(cors());
 app.use(express.json());
 app.use(middleware.requestLogger);
 
+// Require token to manipulate blogs or user info
 app.use('/api/blogs', middleware.userExtractor, blogRouter);
-app.use('/api/users', userRouter);
+app.use('/api/users', middleware.userExtractor, userRouter);
+
+// No token needed when creating new user or logging in
+app.use('/api/newUser', newUserRouter);
 app.use('/api/login', loginRouter);
 
 if (process.env.NODE_ENV === 'test') {

@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useDispatch} from "react-redux";
 
 import blogService from "../services/blogs";
+import userService from "../services/users";
+
 import loginService from "../services/login";
 
 import { setNotification } from "../reducers/notificationReducer";
@@ -15,16 +17,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  // Use local token to log in
-  useEffect(() => {
-    const loggedUserJson = window.localStorage.getItem("loggedUserBlogList");
-    if (loggedUserJson) {
-      const newUser = JSON.parse(loggedUserJson);
-      dispatch(setUser(newUser));
-      blogService.setToken(newUser.token);
-      dispatch(fetchBlogs());
-    }
-  }, []);
+
   //Login
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -32,7 +25,11 @@ const Login = () => {
       const user = await loginService.login({ username, password });
       console.log("logged in with", username, password);
       dispatch(setNotification(`Logged in with ${username}`, 3));
+
+      //Set Token. There is better way for this
       blogService.setToken(user.token);
+      userService.setToken(user.token);
+
       window.localStorage.setItem("loggedUserBlogList", JSON.stringify(user));
       dispatch(setUser(user));
       setUsername("");
