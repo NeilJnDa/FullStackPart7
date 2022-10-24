@@ -1,18 +1,21 @@
+/* eslint-disable no-unused-vars */
 import blogService from "../services/blogs";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteBlog, fetchBlogs } from "../reducers/blogReducer";
-import { useParams } from "react-router-dom"
-const Blog = () => {
+import { useParams, useNavigate} from "react-router-dom"
+import NewCommentForm from "./NewCommentForm";
+
+const BlogSingle = () => {
   const blogs = useSelector(state=>state.blog)
   const user = useSelector(state=>state.user)
-  const blog =blogs.find(b => b.id === useParams().id)
-  console.log(blogs)
-  console.log(useParams().id)
   const dispatch = useDispatch()
+  const blogId = useParams().id
+  const blog = blogs.find(b => b.id === blogId)
+
   if(!blog){
     return (<p>This blog page is missing</p>)
   }
-
+  else{
     return (
       <div id={blog.title} className="blog">
         <h2>
@@ -31,27 +34,36 @@ const Blog = () => {
           </button>
         </div>
         <div>Added by {blog.author}</div>
-        <RemoveButton
+        {/* <RemoveButton
           blog={blog}
           user={user}
-        />
+        /> */}
+        <h3>Comments</h3>
+        <NewCommentForm blog={blog}/>
+        <ul>
+          {blog.comments.map(c=><li key={c}>{c}</li>)}
+        </ul>
       </div>
     );
+  }
 };
-const RemoveButton = ({ blog, user }) => {
-  const dispatch = useDispatch()
-  if (user && blog.user.username && user.username === blog.user.username)
-    return (
-      <button
-        onClick={() => {
-          if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-            dispatch(deleteBlog(blog))
-          }
-        }}
-      >
-        Remove
-      </button>
-    );
-  else return null;
-};
-export default Blog;
+// const RemoveButton = ({ blog, user }) => {
+//   const dispatch = useDispatch()
+//   const navigate = useNavigate()
+//   if (user.username && blog.user.username && user.username === blog.user.username)
+//     return (
+//       <button
+//         onClick={() => {
+//           if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+//             dispatch(deleteBlog(blog))
+//             navigate("/")
+//           }
+//         }}
+//       >
+//         Remove
+//       </button>
+//     );
+//   else return null;
+// };
+
+export default BlogSingle;

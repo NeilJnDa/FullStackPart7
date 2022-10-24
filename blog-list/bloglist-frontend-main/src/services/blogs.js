@@ -29,5 +29,12 @@ const removeOne = (blog) => {
   const request = axios.delete(`${baseUrl}/${blog.id}`);
   return request.then((response) => response.data);
 };
+const addComment = ({blog, comment}) =>{
+  const fieldToChange = {
+    comments: blog.comments.concat(comment)
+  }
+  const request = axios.post(`${baseUrl}/${blog.id}/comment`, fieldToChange);
+  request.then((response) => response.data);
+}
 
-export default { setToken, getAll, createNew, addLikes, removeOne };
+export default { setToken, getAll, createNew, addLikes, removeOne, addComment };

@@ -8,6 +8,7 @@ import UserSingle from "./components/UserSingle"
 import BlogSingle from "./components/BlogSingle"
 
 
+
 import blogService from "./services/blogs";
 import userService from "./services/users";
 
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="/users" element={<UserList/>} />
             <Route path="/users/:id" element={<UserSingle/>} />
             <Route path="/blogs/:id" element={<BlogSingle/>} />
+            
 
           </Routes>
         </Router>

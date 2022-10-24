@@ -33,7 +33,7 @@ const BlogList = () => {
       console.error(exception);
     }
   };
-  function refreshBlogList() {
+  const refreshBlogList = () => {
     dispatch(fetchBlogs());
   }
   //Blog page

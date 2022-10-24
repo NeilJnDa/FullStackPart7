@@ -23,9 +23,7 @@ export const createBlog = (newBlog) => async (dispatch) => {
   try {
     const createdBlog = await blogService.createNew(newBlog);
     dispatch(appendBlog(createdBlog));
-    console.log(createdBlog)
-    const updatedUser = await userService.addUserBlogs(createdBlog.id);
-    console.log(updatedUser)
+    userService.addUserBlogs(createdBlog.id);
   } catch (error) {
     console.error(error);
   }
@@ -40,6 +38,15 @@ export const deleteBlog = (blog) => async (dispatch) =>{
       
       dispatch(fetchBlogs())
     }
+  } catch (error) {
+    console.error(error);
+  }
+}
+export const addComment = ({blog, comment}) => async (dispatch) =>{
+  console.log(blog)
+  try {
+    await blogService.addComment({blog, comment})
+    await dispatch(fetchBlogs())
   } catch (error) {
     console.error(error);
   }

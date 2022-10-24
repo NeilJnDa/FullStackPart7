@@ -13,7 +13,7 @@ const setToken = (newToken) => {
 };
 
 const getAllUsers = () => {
-  console.log(token)
+  //console.log(token)
   const request = axios.get(baseUrl)
   return request.then((response) => response.data);
 };

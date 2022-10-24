@@ -1,6 +1,5 @@
 const blogRouter = require('express').Router();
 const Blog = require('../models/blog');
-const User = require('../models/user');
 
 blogRouter.get('/', async (request, response) => {
     const blogs = await Blog.find({}).populate('user');
@@ -33,6 +32,12 @@ blogRouter.put('/:id', async (request, response) => {
     const blog = {
         likes: request.body.likes,
     };
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true });
+    response.status(200).json(updatedBlog);
+});
+// Add Comment
+blogRouter.post('/:id/comment', async (request, response) => {
+    const blog = request.body;
     const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true });
     response.status(200).json(updatedBlog);
 });

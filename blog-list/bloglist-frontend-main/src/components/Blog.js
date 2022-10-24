@@ -2,11 +2,10 @@ import blogService from "../services/blogs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteBlog, fetchBlogs } from "../reducers/blogReducer";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 const Blog = ({ blog, user }) => {
   const dispatch = useDispatch()
-
   const [visible, setVisible] = useState(false);
   const blogStyle = {
     paddingTop: 10,
@@ -51,12 +50,14 @@ const Blog = ({ blog, user }) => {
 };
 const RemoveButton = ({ blog, user }) => {
   const dispatch = useDispatch()
+
   if (user && blog.user.username && user.username === blog.user.username)
     return (
       <button
         onClick={() => {
           if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
             dispatch(deleteBlog(blog))
+            console.log("navigate")
           }
         }}
       >
