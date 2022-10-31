@@ -25,6 +25,7 @@ const BlogSingle = () => {
         <div>
           Likes <span id="LikesNumber">{blog.likes}</span>{" "}
           <button
+            className="btn btn-secondary"
             onClick={() => {
               blogService.addLikes(blog)
               dispatch(fetchBlogs())
@@ -34,10 +35,10 @@ const BlogSingle = () => {
           </button>
         </div>
         <div>Added by {blog.author}</div>
-        {/* <RemoveButton
+        <RemoveButton
           blog={blog}
           user={user}
-        /> */}
+        />
         <h3>Comments</h3>
         <NewCommentForm blog={blog}/>
         <ul>
@@ -47,23 +48,24 @@ const BlogSingle = () => {
     );
   }
 };
-// const RemoveButton = ({ blog, user }) => {
-//   const dispatch = useDispatch()
-//   const navigate = useNavigate()
-//   if (user.username && blog.user.username && user.username === blog.user.username)
-//     return (
-//       <button
-//         onClick={() => {
-//           if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-//             dispatch(deleteBlog(blog))
-//             navigate("/")
-//           }
-//         }}
-//       >
-//         Remove
-//       </button>
-//     );
-//   else return null;
-// };
+const RemoveButton = ({ blog, user }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  if (user.username && blog.user.username && user.username === blog.user.username)
+    return (
+      <button
+        className="btn btn-danger"
+        onClick={() => {
+          if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+            dispatch(deleteBlog(blog))
+            navigate("/")
+          }
+        }}
+      >
+        Remove
+      </button>
+    );
+  else return null;
+};
 
 export default BlogSingle;

@@ -7,6 +7,12 @@ import blogService from "../services/blogs"
 import {
     Link
   } from "react-router-dom"
+
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { Button } from "react-bootstrap";
+
+
 const Navigation = ()=>{
     const padding = {
         padding: 5
@@ -23,11 +29,24 @@ const Navigation = ()=>{
         dispatch(setBlogs([]));
     };
     return(
-    <div>
-        <Link style={padding} to="/">Blogs</Link>
-        <Link style={padding} to="/users">Users</Link>
-    <em> {user.name} Logged in </em>
-    <button onClick={handleLogout}>Logout</button> 
+      <div>
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="me-auto">
+          <Nav.Link href="#" as="span">   
+            <Link style={padding} to="/">Blogs</Link>
+          </Nav.Link>    
+          <Nav.Link href="#" as="span">  
+            <Link style={padding} to="/users">Users</Link>
+          </Nav.Link>    
+          <Nav.Link href="#" as="span">   
+            <em> {user.name} Logged in </em>
+            <Button variant="primary" onClick={handleLogout}>Logout</Button> 
+          </Nav.Link>    
+        </Nav>
+      </Navbar.Collapse>
+      </Navbar>
     </div>
     )
 }

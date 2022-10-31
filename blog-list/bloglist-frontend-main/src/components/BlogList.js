@@ -10,6 +10,8 @@ import Blog from "./Blog";
 import Toggle from "./Toggle";
 import NewBlogForm from "./NewBlogForm";
 
+import Table from "react-bootstrap/Table";
+
 const BlogList = () => {
   const createToggleRef = useRef();
   const blogs = useSelector(state => state.blog);
@@ -39,23 +41,28 @@ const BlogList = () => {
   //Blog page
   return (
     <div>
-      <h2>Blogs</h2>
+      <h1>Blogs</h1>
       <Notification />
       <Toggle buttonLabel="Create New" ref={createToggleRef}>
         <NewBlogForm createNewBlog={createNewBlog} />
       </Toggle>
-      <h2>List</h2>
       <div>
-        {[...blogs]
-          .sort((a, b) => b.likes - a.likes)
-          .map((blog) => (
-            <Blog
-              key={blog.id}
-              blog={blog}
-              refreshBlogList={refreshBlogList}
-              user={user}
-            />
-          ))}
+        <Table striped bordered hover>
+        <tbody>
+          {[...blogs]
+            .sort((a, b) => b.likes - a.likes)
+            .map((blog) => (
+              <tr key = {blog.id}>
+                <Blog
+                  key={blog.id}
+                  blog={blog}
+                  refreshBlogList={refreshBlogList}
+                  user={user}
+                />
+              </tr>
+            ))}
+        </tbody>
+        </Table>
       </div>
     </div>
   );

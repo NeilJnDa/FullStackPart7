@@ -13,6 +13,9 @@ import { setUser } from "../reducers/userReducer";
 
 import Notification from "./Notification";
 
+import {Form, Button, FormGroup, FormLabel } from "react-bootstrap"
+
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -45,31 +48,31 @@ const Login = () => {
     <div>
       <h2>Log in to application</h2>
       <Notification />
-      <form onSubmit={handleLogin}>
-        <div>
-          Username
-          <input
+      <Form onSubmit={handleLogin}>
+        <FormGroup>
+          <FormLabel>Username</FormLabel> 
+          <Form.Control
             id="username"
             name="Username"
             type="text"
             value={username}
             onChange={({ target }) => setUsername(target.value)}
           />
-        </div>
-        <div>
-          Password
-          <input
+        </FormGroup>
+        <FormGroup>
+        <FormLabel>Password</FormLabel> 
+          <Form.Control
             id="password"
             name="Password"
             type="text"
             value={password}
             onChange={({ target }) => setPassword(target.value)}
           />
-        </div>
-        <button id="login-submit" type="submit">
+        </FormGroup>
+        <Button variant="primary" id="login-submit" type="submit">
           login
-        </button>
-      </form>
+        </Button>
+      </Form>
     </div>
   );
 };

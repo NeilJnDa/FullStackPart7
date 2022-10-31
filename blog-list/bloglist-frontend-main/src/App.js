@@ -44,13 +44,13 @@ const App = () => {
   //JSX returned by react
   if (user === null)
     return (
-      <div>
+      <div className="container">
         <Login/>
       </div>
     );
   else {
     return (
-      <div>
+      <div className="container">
         <Router>
           <Navigation/>
           <Routes>
