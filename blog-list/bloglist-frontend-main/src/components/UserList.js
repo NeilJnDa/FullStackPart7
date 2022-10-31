@@ -2,6 +2,7 @@ import { useEffect} from "react";
 import { useDispatch, useSelector  } from "react-redux";
 import { Link } from "react-router-dom"; 
 
+import Table from "react-bootstrap/Table";
 // import blogService from "../services/blogs";
 
 // import { setNotification } from "../reducers/notificationReducer";
@@ -20,14 +21,14 @@ const UserList = () => {
   if(allUsers.length === 0 )
     return(
       <div>
-        <h2>Users</h2>
+        <h1>Users</h1>
         <p>No Users</p>
       </div>
     )
   return(
     <div>   
-      <h2>Users</h2>
-      <table>
+      <h1>Users</h1>
+      <Table striped bordered hover>
         <tbody>
           <tr>
             <th></th>
@@ -35,7 +36,7 @@ const UserList = () => {
           </tr>
           {allUsers.map(user => userRow(user))}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 };

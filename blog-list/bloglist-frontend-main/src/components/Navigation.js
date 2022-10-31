@@ -14,9 +14,10 @@ import { Button } from "react-bootstrap";
 
 
 const Navigation = ()=>{
-    const padding = {
-        padding: 5
-      }
+    const navTitle = {
+        textDecoration: "none",
+        color: "black"
+    }
     const dispatch = useDispatch()
     const user = useSelector(state=>state.user)
     //Logout
@@ -35,16 +36,15 @@ const Navigation = ()=>{
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="me-auto">
           <Nav.Link href="#" as="span">   
-            <Link style={padding} to="/">Blogs</Link>
+            <Link style={navTitle} to="/">Blogs</Link>
           </Nav.Link>    
           <Nav.Link href="#" as="span">  
-            <Link style={padding} to="/users">Users</Link>
-          </Nav.Link>    
-          <Nav.Link href="#" as="span">   
-            <em> {user.name} Logged in </em>
-            <Button variant="primary" onClick={handleLogout}>Logout</Button> 
+            <Link style={navTitle} to="/users">Users</Link>
           </Nav.Link>    
         </Nav>
+        <Navbar.Text>
+          <div style={navTitle}> {user.name} Logged in <Button variant="primary" onClick={handleLogout}>Logout</Button> </div>
+        </Navbar.Text>
       </Navbar.Collapse>
       </Navbar>
     </div>
